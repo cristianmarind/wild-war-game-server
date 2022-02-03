@@ -49,11 +49,12 @@ app.use(function(req, res, next) {
   });
 
 io.on('connection', function (socket) {
-
     if (!isValidUsername(socket.handshake.query.playerId)) {
         socket.emit('reseat')
     }
+    console.log(socket.handshake.query.playerId);
     socket.on('conectToServer', function (serverId) {
+        console.log(serverId);
         let player = gameMethods.createPlayer(socket.handshake.query.playerId, serverId)
         socket.broadcast.emit(`newPlayer-server-${serverId}`, {
             player: player,
